@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Spot the Symbol</title>
+	<link rel="stylesheet" href="css/spotthesymbol.css">
+	<script src="js/jquery-2.2.1.min.js"></script>
+	<script>
+		$(function () {
+			// This function calculates and returns the distance value
+			function calculateDistance(x, y) {
+				var symbolPositionX = 97;
+				var symbolPositionY = 106;
+				return Math.sqrt(((x - symbolPositionX) * (x - symbolPositionX)) + ((y - symbolPositionY) * (y - symbolPositionY)));
+			}
+
+			var statusDisplay = $('.status')
+
+			// Your jQuery Code goes here
+            
+            $('.container').on({
+                mousemove: function(evt){
+                    $('.coordinates').html(evt.offsetX + ',' + evt.offsety);
+                    var distance = calcuateDistance(evt.offsetX, evt.offsetY);
+                    
+                    if(distance > 30){
+                        statusDisplay.html("You are not too far off buddy!!");
+                    } else if (disance > 20 && distance < 30){
+                        statusDisplay.html("your are closer now!");
+                    } else if (disance > 10 && distance < 20){
+                        statusDisplay.html("your are closerer now!");
+                    } else if (disance > 8 && distance < 10){
+                        statusDisplay.html("your are closererer now!");
+                    } else if (disance >= 0 && distance < 8){
+                        statusDisplay.html("you found it!! now click!");
+                    }
+                        
+                 },
+                click: function(evt){
+                if(calculateDistance(evt.offsetX, evt.offsetY) < 8){
+                    statusDisplay.html("congrats you won the game!");
+            } else{
+                               statusDisplay.html("oops you lost!");
+                               }
+          $(this).off();
+            },
+                mouseLeave: function(){
+                    statusDisplay.html("find the hand!");
+                    $('.coordinates').html("0,0");
+                }
+                
+                
+            })
+
+		})
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="statusBar">
+			<h3 class="status">Find the Hand !</h3>
+			<h3 class="coordinates">0,0</h3>
+		</div>
+	</div>
+</body>
+
+</html>
